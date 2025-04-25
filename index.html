@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Социальная сеть</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Экран входа/регистрации -->
+    <div id="auth">
+      <h2>Вход</h2>
+      <input type="text" id="login-username" placeholder="Логин">
+      <input type="password" id="login-password" placeholder="Пароль">
+      <button onclick="login()">Войти</button>
+      <h2>Регистрация</h2>
+      <input type="text" id="reg-username" placeholder="Логин">
+      <input type="password" id="reg-password" placeholder="Пароль">
+      <button onclick="register()">Зарегистрироваться</button>
+    </div>
+
+    <!-- Основной интерфейс -->
+    <div id="main" style="display: none;">
+      <div id="header">
+        <span id="user-info"></span>
+        <button onclick="logout()">Выйти</button>
+      </div>
+      <div id="sidebar">
+        <button onclick="showProfile()">Профиль</button>
+        <button onclick="showPosts()">Посты</button>
+        <button onclick="showMessages()">Сообщения</button>
+        <button onclick="showFriends()">Друзья</button>
+        <button onclick="showSearch()">Поиск</button>
+        <button id="admin-panel" style="display: none;" onclick="showAdminPanel()">Админ-панель</button>
+      </div>
+      <div id="content">
+        <!-- Профиль -->
+        <div id="profile" style="display: none;">
+          <h2>Профиль</h2>
+          <p id="profile-info"></p>
+          <h3>Настройки</h3>
+          <label>Конфиденциальность:</label>
+          <select id="privacy">
+            <option value="public">Публичный</option>
+            <option value="friends">Только друзья</option>
+            <option value="private">Приватный</option>
+          </select>
+          <input type="password" id="new-password" placeholder="Новый пароль">
+          <button onclick="updateProfile()">Сохранить</button>
+        </div>
+
+        <!-- Посты -->
+        <div id="posts" style="display: none;">
+          <textarea id="new-post" placeholder="Напишите пост..."></textarea>
+          <button onclick="createPost()">Опубликовать</button>
+          <div id="post-list"></div>
+        </div>
+
+        <!-- Сообщения -->
+        <div id="messages" style="display: none;">
+          <h3>Сообщения</h3>
+          <input type="text" id="message-recipient" placeholder="Кому">
+          <textarea id="message-content" placeholder="Сообщение"></textarea>
+          <button onclick="sendMessage()">Отправить</button>
+          <div id="message-list"></div>
+        </div>
+
+        <!-- Друзья -->
+        <div id="friends" style="display: none;">
+          <h3>Друзья</h3>
+          <div id="friend-list"></div>
+          <h3>Черный список</h3>
+          <input type="text" id="block-user" placeholder="Заблокировать пользователя">
+          <button onclick="blockUser()">Заблокировать</button>
+          <div id="block-list"></div>
+        </div>
+
+        <!-- Поиск -->
+        <div id="search" style="display: none;">
+          <h3>Поиск пользователей</h3>
+          <input type="text" id="search-query" placeholder="Введите имя">
+          <button onclick="searchUsers()">Найти</button>
+          <div id="search-results"></div>
+        </div>
+
+        <!-- Админ-панель -->
+        <div id="admin" style="display: none;">
+          <h3>Админ-панель</h3>
+          <input type="text" id="ban-user" placeholder="Забанить пользователя">
+          <button onclick="banUser()">Забанить</button>
+          <input type="text" id="unban-user" placeholder="Разбанить пользователя">
+          <button onclick="unbanUser()">Разбанить</button>
+          <input type="number" id="delete-post-id" placeholder="ID поста для удаления">
+          <button onclick="deletePost()">Удалить пост</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
