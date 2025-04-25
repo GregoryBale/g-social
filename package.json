@@ -1,0 +1,17 @@
+{
+  "name": "social-network",
+  "version": "1.0.0",
+  "description": "A social network built with HTML, CSS, and JavaScript",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^0.9.4",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2"
+  },
+  "devDependencies": {},
+  "author": "",
+  "license": "ISC"
+}
