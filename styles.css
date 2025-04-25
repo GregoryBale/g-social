@@ -1,0 +1,57 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f3f4f6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+button {
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+input, textarea {
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    padding: 8px;
+    width: 100%;
+}
+
+.post, .message, .friend, .blacklist-item {
+    background: white;
+    padding: 16px;
+    margin-bottom: 16px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.banned {
+    background: #fee2e2;
+    border: 1px solid #ef4444;
+}
+
+.hidden {
+    display: none;
+}
+
+#search-results div, #friends-list div, #blacklist-list div {
+    cursor: pointer;
+    padding: 8px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+#search-results div:hover, #friends-list div:hover, #blacklist-list div:hover {
+    background: #f3f4f6;
+}
