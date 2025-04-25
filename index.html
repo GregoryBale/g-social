@@ -1,103 +1,112 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Социальная сеть</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>СоцСеть</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <div id="app">
-    <!-- Экран входа/регистрации -->
-    <div id="auth">
-      <h2>Вход</h2>
-      <input type="text" id="login-username" placeholder="Логин">
-      <input type="password" id="login-password" placeholder="Пароль">
-      <button onclick="login()">Войти</button>
-      <h2>Регистрация</h2>
-      <input type="text" id="reg-username" placeholder="Логин">
-      <input type="password" id="reg-password" placeholder="Пароль">
-      <button onclick="register()">Зарегистрироваться</button>
-    </div>
+<body class="bg-gray-100">
+    <div id="app" class="container mx-auto p-4">
+        <!-- Навигация -->
+        <nav class="bg-blue-600 text-white p-4 rounded mb-4 flex justify-between items-center">
+            <div>
+                <span class="font-bold text-xl">СоцСеть</span>
+                <span id="admin-badge" class="hidden bg-red-500 text-white px-2 py-1 rounded ml-2">Админ</span>
+            </div>
+            <div id="auth-section">
+                <button id="login-btn" class="bg-white text-blue-600 px-4 py-2 rounded">Вход</button>
+                <button id="register-btn" class="bg-white text-blue-600 px-4 py-2 rounded ml-2">Регистрация</button>
+                <button id="logout-btn" class="hidden bg-white text-blue-600 px-4 py-2 rounded">Выход</button>
+            </div>
+        </nav>
 
-    <!-- Основной интерфейс -->
-    <div id="main" style="display: none;">
-      <div id="header">
-        <span id="user-info"></span>
-        <button onclick="logout()">Выйти</button>
-      </div>
-      <div id="sidebar">
-        <button onclick="showProfile()">Профиль</button>
-        <button onclick="showPosts()">Посты</button>
-        <button onclick="showMessages()">Сообщения</button>
-        <button onclick="showFriends()">Друзья</button>
-        <button onclick="showSearch()">Поиск</button>
-        <button id="admin-panel" style="display: none;" onclick="showAdminPanel()">Админ-панель</button>
-      </div>
-      <div id="content">
-        <!-- Профиль -->
-        <div id="profile" style="display: none;">
-          <h2>Профиль</h2>
-          <p id="profile-info"></p>
-          <h3>Настройки</h3>
-          <label>Конфиденциальность:</label>
-          <select id="privacy">
-            <option value="public">Публичный</option>
-            <option value="friends">Только друзья</option>
-            <option value="private">Приватный</option>
-          </select>
-          <input type="password" id="new-password" placeholder="Новый пароль">
-          <button onclick="updateProfile()">Сохранить</button>
-        </div>
-
-        <!-- Посты -->
-        <div id="posts" style="display: none;">
-          <textarea id="new-post" placeholder="Напишите пост..."></textarea>
-          <button onclick="createPost()">Опубликовать</button>
-          <div id="post-list"></div>
-        </div>
-
-        <!-- Сообщения -->
-        <div id="messages" style="display: none;">
-          <h3>Сообщения</h3>
-          <input type="text" id="message-recipient" placeholder="Кому">
-          <textarea id="message-content" placeholder="Сообщение"></textarea>
-          <button onclick="sendMessage()">Отправить</button>
-          <div id="message-list"></div>
-        </div>
-
-        <!-- Друзья -->
-        <div id="friends" style="display: none;">
-          <h3>Друзья</h3>
-          <div id="friend-list"></div>
-          <h3>Черный список</h3>
-          <input type="text" id="block-user" placeholder="Заблокировать пользователя">
-          <button onclick="blockUser()">Заблокировать</button>
-          <div id="block-list"></div>
+        <!-- Формы входа/регистрации -->
+        <div id="auth-form" class="hidden bg-white p-6 rounded shadow mb-4">
+            <h2 id="auth-title" class="text-xl font-bold mb-4"></h2>
+            <form id="auth-form-element">
+                <input type="text" id="username" placeholder="Логин" class="border p-2 w-full mb-2" required>
+                <input type="password" id="password" placeholder="Пароль" class="border p-2 w-full mb-2" required>
+                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Отправить</button>
+            </form>
         </div>
 
         <!-- Поиск -->
-        <div id="search" style="display: none;">
-          <h3>Поиск пользователей</h3>
-          <input type="text" id="search-query" placeholder="Введите имя">
-          <button onclick="searchUsers()">Найти</button>
-          <div id="search-results"></div>
+        <div class="mb-4">
+            <input type="text" id="search" placeholder="Поиск пользователей..." class="border p-2 w-full rounded">
+            <div id="search-results" class="mt-2"></div>
+        </div>
+
+        <!-- Профиль -->
+        <div id="profile" class="hidden bg-white p-6 rounded shadow mb-4">
+            <h2 class="text-xl font-bold mb-4">Профиль</h2>
+            <p><strong>Логин:</strong> <span id="profile-username"></span></p>
+            <p><strong>Статус:</strong> <span id="profile-status"></span></p>
+            <button id="edit-profile-btn" class="bg-blue-600 text-white px-4 py-2 rounded">Редактировать</button>
+            <button id="settings-btn" class="bg-blue-600 text-white px-4 py-2 rounded ml-2">Настройки</button>
+        </div>
+
+        <!-- Форма редактирования профиля -->
+        <div id="edit-profile" class="hidden bg-white p-6 rounded shadow mb-4">
+            <h2 class="text-xl font-bold mb-4">Редактировать профиль</h2>
+            <form id="edit-profile-form">
+                <input type="text" id="edit-username" placeholder="Новый логин" class="border p-2 w-full mb-2">
+                <input type="password" id="edit-password" placeholder="Новый пароль" class="border p-2 w-full mb-2">
+                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Сохранить</button>
+            </form>
+        </div>
+
+        <!-- Настройки -->
+        <div id="settings" class="hidden bg-white p-6 rounded shadow mb-4">
+            <h2 class="text-xl font-bold mb-4">Настройки</h2>
+            <form id="settings-form">
+                <label><input type="checkbox" id="profile-hidden"> Скрытый профиль</label><br>
+                <label><input type="checkbox" id="messages-friends-only"> Сообщения только от друзей</label><br>
+                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Сохранить</button>
+            </form>
         </div>
 
         <!-- Админ-панель -->
-        <div id="admin" style="display: none;">
-          <h3>Админ-панель</h3>
-          <input type="text" id="ban-user" placeholder="Забанить пользователя">
-          <button onclick="banUser()">Забанить</button>
-          <input type="text" id="unban-user" placeholder="Разбанить пользователя">
-          <button onclick="unbanUser()">Разбанить</button>
-          <input type="number" id="delete-post-id" placeholder="ID поста для удаления">
-          <button onclick="deletePost()">Удалить пост</button>
+        <div id="admin-panel" class="hidden bg-red-100 p-6 rounded shadow mb-4">
+            <h2 class="text-xl font-bold mb-4">Админ-панель</h2>
+            <input type="text" id="ban-username" placeholder="Логин для бана" class="border p-2 w-full mb-2">
+            <button id="ban-btn" class="bg-red-600 text-white px-4 py-2 rounded">Забанить</button>
+            <button id="unban-btn" class="bg-green-600 text-white px-4 py-2 rounded ml-2">Разбанить</button>
+            <input type="text" id="delete-post-id" placeholder="ID поста для удаления" class="border p-2 w-full mb-2">
+            <button id="delete-post-btn" class="bg-red-600 text-white px-4 py-2 rounded">Удалить пост</button>
         </div>
-      </div>
+
+        <!-- Посты -->
+        <div id="posts">
+            <form id="post-form" class="mb-4">
+                <textarea id="post-content" placeholder="Что у вас нового?" class="border p-2 w-full rounded"></textarea>
+                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Опубликовать</button>
+            </form>
+            <div id="posts-list"></div>
+        </div>
+
+        <!-- Сообщения -->
+        <div id="messages" class="hidden bg-white p-6 rounded shadow mb-4">
+            <h2 class="text-xl font-bold mb-4">Личные сообщения</h2>
+            <input type="text" id="message-recipient" placeholder="Получатель" class="border p-2 w-full mb-2">
+            <textarea id="message-content" placeholder="Сообщение" class="border p-2 w-full mb-2"></textarea>
+            <button id="send-message-btn" class="bg-blue-600 text-white px-4 py-2 rounded">Отправить</button>
+            <div id="messages-list" class="mt-4"></div>
+        </div>
+
+        <!-- Друзья и черный список -->
+        <div id="friends" class="bg-white p-6 rounded shadow mb-4">
+            <h2 class="text-xl font-bold mb-4">Друзья</h2>
+            <input type="text" id="friend-username" placeholder="Добавить друга" class="border p-2 w-full mb-2">
+            <button id="add-friend-btn" class="bg-blue-600 text-white px-4 py-2 rounded">Добавить</button>
+            <div id="friends-list" class="mt-4"></div>
+            <h2 class="text-xl font-bold mt-4">Черный список</h2>
+            <input type="text" id="blacklist-username" placeholder="Добавить в черный список" class="border p-2 w-full mb-2">
+            <button id="add-blacklist-btn" class="bg-red-600 text-white px-4 py-2 rounded">Добавить</button>
+            <div id="blacklist-list" class="mt-4"></div>
+        </div>
     </div>
-  </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-  <script src="script.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
